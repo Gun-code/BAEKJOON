@@ -10,19 +10,29 @@ public class Main04 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken());
-        int wid = 0;
-        int high = 0;
+        boolean arr[][] = new boolean[100][100];
         int sum = 0;
+        int wid,high;
 
+        int n = Integer.parseInt(st.nextToken());
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             wid = Integer.parseInt(st.nextToken());
             high = Integer.parseInt(st.nextToken());
-            sum += 100;
-            if()
+            for (int j = 0; j < 10; j++) {
+                for (int k = 0; k < 10; k++) {
+                    arr[wid + j][high + k] = true;
+                }
+            }
         }
-
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                if (arr[i][j]) {
+                    sum += 1;
+                }
+            }
+        }
+        System.out.println(sum);
     }
 }
