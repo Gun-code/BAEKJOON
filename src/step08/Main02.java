@@ -30,6 +30,7 @@ public class Main02 {
                 sum = (int) (sum - Math.pow(b, a - 1));
                 if(){
                     
+
                 }
             }
         }
