@@ -11,9 +11,34 @@ public class Main04 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
-        boolean r[][] = new boolean[8][8];
+        int min = Integer.MAX_VALUE;
+        int num;
+        
         boolean a[][] = new boolean[n][m];
+
+        for (int i = 0; i < n; i++) {
+            String str = br.readLine();
+
+            for (int j = 0; j < m; j++) {
+                a[i][j] = (str.charAt(j) == 'W' ? true : false);
+            }
+        }
+
+        for (int i = 0; i < n - 7; i++) {
+            for (int j = 0; j < m - 7; j++) {
+                num = prove(i, j, a);
+                if(min>num)
+                    min = num;
+            }
+        }
+        System.out.println(min);
+    }
+
+    public static int prove(int x, int y, boolean[][] a) throws IOException {
+        int min = Integer.MAX_VALUE;
+        int fix1 = 0;
+        int fix2 = 0;
+        boolean r[][] = new boolean[8][8];
 
         for (int i = 0; i < 8; i++) {
             if (i % 2 == 0) {
@@ -36,55 +61,15 @@ public class Main04 {
             }
         }
 
-        for (int i = 0; i < n; i++) {
-            String str = br.readLine();
-
-            for (int j = 0; j < m; j++) {
-
-                // System.out.println();
-                System.out.println(str);
-                // a[i][j] = (str.charAt(j) == 'W' ? true : false);
-            }
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print(a[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println("===========================================");
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print(r[i][j]);
-            }
-            System.out.println();
-        }
-
-
-        for (int i = 0; i < n - 7; i++) {
-            for (int j = 0; j < m - 7; j++) {
-                prove(i, j, boolean a[n][m], boolean r[n][m]);
-            }
-        }
-        // System.out.println(min);
-    }
-
-    public static void prove(int x, int y,boolean a[][], boolean r[][]) throws IOException {
-
-        int min = Integer.MAX_VALUE;
-        int fix1 = 0;
-        int fix2 = 0;
-
-       
         for (int k = 0; k < 8; k++) {
             for (int l = 0; l < 8; l++) {
-                if (a[x + k][y + l] != r[x + k][y + l]) {
+                if (a[x + k][y + l] != !(r[k][l])) {
                     fix1 += 1;
                 }
-                if (a[x + k][y + l] != !(r[x + k][y + k])) {
+                if (a[x + k][y + l] != (r[k][l])) {
                     fix2 += 1;
                 }
+
             }
 
         }
@@ -97,7 +82,7 @@ public class Main04 {
         }
         fix1 = 0;
         fix2 = 0;
-        System.out.println(min);
+        return min;
     }
 
 }
