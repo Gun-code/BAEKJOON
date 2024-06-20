@@ -9,14 +9,12 @@ public class Main04 {
     public static void main(String[] args) throws NumberFormatException, IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        // int m;
+        int m;
         int a[] = new int[n];
 
         for (int i = 0; i < n; i++) {
             a[i] = Integer.parseInt(br.readLine());
         }
-
-        Arrays.sort(a);
 
         for (int i = 0; i < n; i++) {
             System.out.println(a[i]);
