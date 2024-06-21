@@ -7,25 +7,51 @@ import java.io.InputStreamReader;
 public class Main02 {
     public static void main(String[] args) throws NumberFormatException, IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int m = Integer.parseInt(br.readLine());
+        int t = m;
+        int n, k;
+        int j = Integer.MIN_VALUE;
+        int a = 0;
 
-        int a[] = new int[5];
-        int sum=0;
-        for (int i = 0; i < 5; i++) {
-            a[i] = Integer.parseInt(br.readLine());
-            sum = sum + a[i];
-        }
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                int k;
-                if (a[i] > a[j]) {
-                    k = a[i];
-                    a[i] = a[j];
-                    a[j] = k;
-                }
+        while (true) {
+            t = t / 10;
+            a++;
+            if (t == 0) {
+                break;
             }
         }
-        System.out.println(sum / 5);
-        System.out.println(a[2]);
+        int start = m - 9 * a;
+        if (start < 5) {
+            start = 1;
+        }
+        
+        for (; start < m; start++) {
+            a = 0;
+            t = start;
+            n = start;
+            while (true) {
+                t = t / 10;
+                a++;
+                if (t == 0) {
+                    break;
+                }
+            }
+            for (int i = a; 0 < i; i--) {
+                k = (int) ((start % Math.pow(10, i))-(start % Math.pow(10, i-1)));
+                if (k > 9) {
+                    k = (int) (k / Math.pow(10, i - 1));
+                }
+                n = n + k;
+            }
+            if (n == m) {
+                j = start;
+                System.out.println(start);
+                break;
+            }
+        }
+        if (j < 0) {
+            System.out.println("0");
+        }
+
     }
 }

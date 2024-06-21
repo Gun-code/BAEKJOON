@@ -3,148 +3,86 @@ package step12;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main04 {
-    public static void main(String[] args) throws NumberFormatException, IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int m;
-        int a[] = new int[n];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int min = Integer.MAX_VALUE;
+        int num;
+        
+        boolean a[][] = new boolean[n][m];
 
         for (int i = 0; i < n; i++) {
-            a[i] = Integer.parseInt(br.readLine());
-        }
+            String str = br.readLine();
 
-        for (int i = 0; i < n; i++) {
-            System.out.println(a[i]);
-        }
-
-
-        if (n % 4 == 1)
-            m = n / 4 + 1;
-        else if (n % 4 == 2)
-            m = n / 4 + 2;
-        else if (n % 4 == 3)
-            m = n / 4 + 3;
-        else
-            m = n / 4;
-
-        int d1[] = new int[n / 4];
-        int d2[] = new int[n / 4];
-        int d3[] = new int[n / 4];
-        int d4[] = new int[m];
-
-        int num1, num2, num3, num4;
-
-        if (n <= 4) {
-
-            for (int i = 0; i < n; i++) {
-                d1[i] = Integer.parseInt(br.readLine());
-            }
-
-            for (int i = 0; i < n + 1; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (d1[i] > d1[j]) {
-                        num1 = d1[i];
-                        d1[i] = d1[j];
-                        d1[j] = num1;
-                    }
-                }
-            }
-            for (int i = 0; i < n; i++) {
-                System.out.println(d1[i]);
-            }
-        } else {
-            for (int i = 0; i < n; i++) {
-                int q = 0;
-                int w = 0;
-                int e = 0;
-                int r = 0;
-                if (i < (n / 4)) {
-                    d1[q] = Integer.parseInt(br.readLine());
-                    q++;
-                } else if (i < (n / 2)) {
-                    d2[w] = Integer.parseInt(br.readLine());
-                    w++;
-                } else if (i < (n - m)) {
-                    d3[e] = Integer.parseInt(br.readLine());
-                    e++;
-                } else {
-                    d4[r] = Integer.parseInt(br.readLine());
-                    r++;
-                }
-            }
-            {
-                for (int i = 0; i < d4.length; i++) {
-                    System.out.println(d4[i]);
-                }
-            }
-
-            for (int i = 0; i < (n / 4) - 1; i++) {
-                for (int j = i + 1; j < n / 4; j++) {
-                    if (d1[i] > d1[j]) {
-                        num1 = d1[i];
-                        d1[i] = d1[j];
-                        d1[j] = num1;
-                    }
-
-                    if (d2[i] > d2[j]) {
-                        num2 = d2[i];
-                        d2[i] = d2[j];
-                        d2[j] = num2;
-                    }
-
-                    if (d3[i] > d3[j]) {
-                        num3 = d3[i];
-                        d3[i] = d3[j];
-                        d3[j] = num3;
-                    }
-
-                }
-            }
-            for (int i = 0; i < (n / 4) - 1; i++) {
-                for (int j = i + 1; j < m; j++) {
-                    if (d4[i] > d4[j]) {
-                        num4 = d4[i];
-                        d4[i] = d4[j];
-                        d4[j] = num4;
-                    }
-                }
-            }
-            for (int i = 0; i < n; i++) {
-                int q = 0;
-                int w = 0;
-                int e = 0;
-                int r = 0;
-
-                while (true) {
-                    if ((d1[q] < d2[w]) && (d3[e] < d4[r])) {
-                        if (d1[q] < d3[e]) {
-                            a[i] = d1[q];
-                            q++;
-                            break;
-                        } else {
-                            a[i] = d3[e];
-                            q++;
-                            break;
-                        }
-                    } else if ((d1[q] > d2[w]) && (d3[e] > d4[r])) {
-                        if (d2[w] < d4[r]) {
-                            a[i] = d2[w];
-                            q++;
-                            break;
-                        } else {
-                            a[i] = d4[r];
-                            q++;
-                            break;
-                        }
-                    }
-                }
-            }
-            for (int i = 0; i < n; i++) {
-                System.out.println(a[i]);
+            for (int j = 0; j < m; j++) {
+                a[i][j] = (str.charAt(j) == 'W' ? true : false);
             }
         }
+
+        for (int i = 0; i < n - 7; i++) {
+            for (int j = 0; j < m - 7; j++) {
+                num = prove(i, j, a);
+                if(min>num)
+                    min = num;
+            }
+        }
+        System.out.println(min);
     }
+
+    public static int prove(int x, int y, boolean[][] a) throws IOException {
+        int min = Integer.MAX_VALUE;
+        int fix1 = 0;
+        int fix2 = 0;
+        boolean r[][] = new boolean[8][8];
+
+        for (int i = 0; i < 8; i++) {
+            if (i % 2 == 0) {
+                for (int j = 0; j < 8; j++) {
+                    if (j % 2 == 0) {
+                        r[i][j] = false;
+                    } else {
+                        r[i][j] = true;
+                    }
+                }
+
+            } else {
+                for (int j = 0; j < 8; j++) {
+                    if (j % 2 == 0) {
+                        r[i][j] = true;
+                    } else {
+                        r[i][j] = false;
+                    }
+                }
+            }
+        }
+
+        for (int k = 0; k < 8; k++) {
+            for (int l = 0; l < 8; l++) {
+                if (a[x + k][y + l] != !(r[k][l])) {
+                    fix1 += 1;
+                }
+                if (a[x + k][y + l] != (r[k][l])) {
+                    fix2 += 1;
+                }
+
+            }
+
+        }
+        if (fix1 >= fix2) {
+            if (fix2 < min)
+                min = fix2;
+        } else {
+            if (fix1 < min)
+                min = fix1;
+        }
+        fix1 = 0;
+        fix2 = 0;
+        return min;
+    }
+
 }
