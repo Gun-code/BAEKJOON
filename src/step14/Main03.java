@@ -3,41 +3,38 @@ package step14;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 public class Main03 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int saveNum = Integer.parseInt(st.nextToken());
-        int compareNum = Integer.parseInt(st.nextToken());
+        int count = Integer.parseInt(st.nextToken());
+        Map<String,String> start = new HashMap<>();
 
-        Map<Integer, String> poketkey = new HashMap<>(saveNum);
-        Map<String, Integer> poketvalue = new HashMap<>(saveNum);
+        for (int i = 0; i < count; i++) {
+            st = new StringTokenizer(br.readLine());
+            String name = st.nextToken();
+            String enter = st.nextToken();
+            if (enter.equals("enter")) {
+                start.put(name, enter);
+            } else {
+                start.remove(name);
+            }
+        }
+        TreeMap<String, String> sortMap = new TreeMap<>(Comparator.reverseOrder());
+        sortMap.putAll(start);
+        LinkedHashMap<String, String> lm = new LinkedHashMap<>(sortMap);
 
-        for (int i = 0; i < saveNum; i++) {
-            String name = br.readLine();
-            poketkey.put(i, name);
-            poketvalue.put(name, i);
+        for (Map.Entry<String, String> entry : lm.entrySet()) {
+            System.out.println(entry.getKey());
         }
-
-        for (int i = 0; i < compareNum; i++) {
-            String compare = br.readLine();
-            if (isNumeric(compare))
-                System.out.println(poketkey.get(Integer.parseInt(compare)-1));
-            else
-                System.out.println(poketvalue.get(compare)+1);
-        }
-    }
-    
-    public static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        
+        
     }
 }
