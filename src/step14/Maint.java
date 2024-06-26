@@ -12,6 +12,7 @@ public class Maint {
     ArrayList<LinkedList<String[]>> array = new ArrayList<>(num);
 
     public static void main(String[] args) throws IOException {
+        
     }
 
     public void hashSave(String key, String value) {
