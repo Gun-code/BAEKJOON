@@ -57,7 +57,7 @@ public class Main08 {
         int mid = num / 2;
         int move = prime.size();
 
-        if (prime.get(num - 1) > a) {
+        if (prime.get(num) > a) {
             while (true) {
                 move = move / 2;
                 if (prime.get(mid) > a) {
