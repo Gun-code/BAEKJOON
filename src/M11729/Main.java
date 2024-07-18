@@ -23,7 +23,6 @@ class Hanoi {
     StringBuilder sb;
 
     /* 하노이의 탑 A B C (From A to C) 3단계로 이루어져있음
-    
      *    N   0   0
      * 0. A   B   C
      * 
@@ -49,7 +48,7 @@ class Hanoi {
         System.out.println(sb);
     }
 
-    public void move(int n, int start, int mid, int end){
+    public void move(int n, int start, int mid, int end) {
         if (n == 1) {
             sb.append(start +" "+ end + "\n");
             return;
